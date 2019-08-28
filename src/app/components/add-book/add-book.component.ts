@@ -14,6 +14,7 @@ export class AddBookComponent implements OnInit {
   book: Book = {
     name: '',
     author: '',
+    price: 0,
     description: '',
     id: this.id.generate(),
     links: [

@@ -22,20 +22,20 @@ export class EditBookComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.bookId = this.activatedRoute.snapshot.params['id'];
-    this.bookService.getBookById(this.bookId).subscribe((book: Book) => this.book = JSON.parse(JSON.stringify(book)));
+    this.bookId = this.activatedRoute.snapshot.params.id;
+    // this.bookService.getBookById(this.bookId).subscribe((book: Book) => this.book = JSON.parse(JSON.stringify(book)));
   }
 
   editBook() {
-    this.bookService.editBook(this.book).subscribe((book: Book) => {
-      this.router.navigate(['/panel']);
-      this.message.show(`Book: "${book.name}" edited success`, {
-        cssClass: 'alert-success',
-        showCloseBtn: true,
-        closeByBtn: true,
-        timeout: 3000
-      })
-    })
+    // this.bookService.editBook(this.book).subscribe((book: Book) => {
+    //   this.router.navigate(['/panel']);
+    //   this.message.show(`Book: "${book.name}" edited success`, {
+    //     cssClass: 'alert-success',
+    //     showCloseBtn: true,
+    //     closeByBtn: true,
+    //     timeout: 3000
+    //   })
+    // })
   }
 
 }

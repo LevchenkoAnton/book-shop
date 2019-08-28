@@ -1,44 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Book } from "../models/Book";
-import { IdService } from "./id.service";
-import { of } from 'rxjs';
+import { Book } from '../models/Book';
+import { Observable, of } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  books: Book[] = [
-    {
-      name: 'Выразительный JavaScript',
-      description: 'lorem lorem',
-      author: 'Anonimus',
-      id: '71e9a7dc-fde8-4384-842f-65a17aed5e0e',
-      links: [
-        {
-          type: 'pdf',
-          link: 'link1',
-        },
-        {
-          type: 'otf',
-          link: 'link2',
-        },
-      ]
-    },
-  ];
+  bookCollection: AngularFirestoreCollection;
+  bookDoc: AngularFirestoreDocument;
+  books: Observable<Book[]>;
+  book: Observable<Book>;
 
-  constructor() { }
+  constructor(
+    private afs: AngularFirestore
+  ) {
+    this.bookCollection = this.afs.collection('books');
+  }
 
   getBooks() {
-    return of(this.books);
+    this.books = this.bookCollection.snapshotChanges().pipe(
+      map(collection => {
+        return collection.map(document => {
+          const data = document.payload.doc.data() as Book;
+          data.id = document.payload.doc.id;
+
+          return data;
+        });
+      })
+    );
+    return this.books;
   }
 
   getBookById(id: string) {
-    const book = this.books.find(book => book.id === id);
-    return of(book);
+    // const book = this.books.find(book => book.id === id);
+    // return of(book);
   }
 
   addBook(book: Book) {
-    this.books.unshift(book);
+    this.bookCollection.add(book);
     return of(book);
   }
 
@@ -47,14 +48,14 @@ export class BookService {
   }
 
   editBook(book: Book) {
-    this.books = this.books.map((item: Book) => {
-      if (item.id === book.id) {
-        item = book;
-      }
-
-      return item;
-    });
-
-    return of(book);
+    // this.books = this.books.map((item: Book) => {
+    //   if (item.id === book.id) {
+    //     item = book;
+    //   }
+    //
+    //   return item;
+    // });
+    //
+    // return of(book);
   }
 }
