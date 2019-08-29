@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './components/about/about.component';
@@ -12,6 +13,7 @@ import { PanelComponent } from './components/panel/panel.component';
 import { BookService } from "./services/book.service";
 import { IdService } from "./services/id.service";
 import { AuthService } from './services/auth.service';
+import { BasketService } from './services/basket.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -26,6 +28,9 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CustomDatePipe } from './pipes/custom-date.pipe';
 import { CurrencyComponent } from './components/currency/currency.component';
+import { BasketComponent } from './components/basket/basket.component';
+import { ClientHomeComponent } from './components/client-home/client-home.component';
+import { ClientCheckoutComponent } from './components/client-checkout/client-checkout.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,10 @@ import { CurrencyComponent } from './components/currency/currency.component';
     LogoutComponent,
     RegisterComponent,
     CustomDatePipe,
-    CurrencyComponent
+    CurrencyComponent,
+    BasketComponent,
+    ClientHomeComponent,
+    ClientCheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +57,15 @@ import { CurrencyComponent } from './components/currency/currency.component';
     FlashMessagesModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FontAwesomeModule,
   ],
-  providers: [BookService, IdService, AuthService],
+  providers: [
+    BookService,
+    IdService,
+    AuthService,
+    BasketService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

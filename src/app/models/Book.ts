@@ -11,4 +11,5 @@ export interface Book {
   price: number;
   id?: string;
   links?: Link[];
+  isAddBasket?: boolean;
 }

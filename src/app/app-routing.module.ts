@@ -10,11 +10,14 @@ import { EditBookComponent } from "./components/edit-book/edit-book.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ClientHomeComponent } from './components/client-home/client-home.component';
+import { ClientCheckoutComponent } from './components/client-checkout/client-checkout.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/panel', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', component: ClientHomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'checkout', component: ClientCheckoutComponent },
   { path: 'panel', component: PanelComponent, canActivate: [AuthGuard] },
   { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
   { path: 'add-book', component: AddBookComponent, canActivate: [AuthGuard] },
