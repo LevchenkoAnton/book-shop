@@ -24,6 +24,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CustomDatePipe } from './pipes/custom-date.pipe';
+import { CurrencyComponent } from './components/currency/currency.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { RegisterComponent } from './components/register/register.component';
     NotFoundComponent,
     LoginComponent,
     LogoutComponent,
-    RegisterComponent
+    RegisterComponent,
+    CustomDatePipe,
+    CurrencyComponent
   ],
   imports: [
     BrowserModule,

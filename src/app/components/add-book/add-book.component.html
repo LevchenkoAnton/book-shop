@@ -48,6 +48,20 @@
              *ngIf="bookDescription.touched && bookDescription.invalid"
         >Description field is required</div>
         <div class="form-group">
+          <label for="description">Date</label>
+          <input type="date"
+                 id="date"
+                 class="form-control"
+                 name="price"
+                 [(ngModel)]="book.date"
+                 #bookDate="ngModel"
+                 required
+          >
+        </div>
+        <div class="alert alert-danger"
+             *ngIf="bookDescription.touched && bookDescription.invalid"
+        >Date field is required</div>
+        <div class="form-group">
           <label for="description">Price</label>
           <input type="text"
                  id="price"

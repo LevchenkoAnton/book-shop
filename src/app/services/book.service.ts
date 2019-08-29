@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Book } from '../models/Book';
 import { Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { Book } from '../models/Book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  bookCollection: AngularFirestoreCollection;
-  bookDoc: AngularFirestoreDocument;
+  bookCollection: AngularFirestoreCollection<Book>;
+  bookDoc: AngularFirestoreDocument<Book>;
   books: Observable<Book[]>;
   book: Observable<Book>;
 
@@ -30,12 +30,13 @@ export class BookService {
         });
       })
     );
+
     return this.books;
   }
 
   getBookById(id: string) {
-    // const book = this.books.find(book => book.id === id);
-    // return of(book);
+    this.bookDoc = this.afs.doc(`books/${id}`);
+    return this.bookDoc.get();
   }
 
   addBook(book: Book) {
@@ -43,19 +44,12 @@ export class BookService {
     return of(book);
   }
 
-  deleteBook(id: string) {
-
+  deleteBook(book: Book) {
+    return this.bookCollection.doc(book.id).delete();
   }
 
   editBook(book: Book) {
-    // this.books = this.books.map((item: Book) => {
-    //   if (item.id === book.id) {
-    //     item = book;
-    //   }
-    //
-    //   return item;
-    // });
-    //
-    // return of(book);
+    this.bookDoc = this.afs.doc(`books/${book.id}`);
+    return this.bookDoc.update(book);
   }
 }

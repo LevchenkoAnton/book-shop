@@ -12,7 +12,14 @@ import { FlashMessagesService } from "angular2-flash-messages";
 })
 export class EditBookComponent implements OnInit {
   bookId: string;
-  book: Book;
+  book: Book = {
+    price: 0,
+    name: '',
+    author: '',
+    description: '',
+    links: [],
+    date: '',
+  };
 
   constructor(
     public bookService: BookService,
@@ -23,19 +30,32 @@ export class EditBookComponent implements OnInit {
 
   ngOnInit() {
     this.bookId = this.activatedRoute.snapshot.params.id;
-    // this.bookService.getBookById(this.bookId).subscribe((book: Book) => this.book = JSON.parse(JSON.stringify(book)));
+    this.bookService.getBookById(this.bookId).subscribe((data: any) => {
+      this.book = data.data();
+      this.book.id = this.bookId;
+    });
   }
 
   editBook() {
-    // this.bookService.editBook(this.book).subscribe((book: Book) => {
-    //   this.router.navigate(['/panel']);
-    //   this.message.show(`Book: "${book.name}" edited success`, {
-    //     cssClass: 'alert-success',
-    //     showCloseBtn: true,
-    //     closeByBtn: true,
-    //     timeout: 3000
-    //   })
-    // })
+    this.bookService.editBook(this.book)
+      .then(() => {
+        this.router.navigate(['/panel']);
+        this.message.show(`Book: "${this.book.name}" updated success`, {
+          cssClass: 'alert-success',
+          showCloseBtn: true,
+          closeByBtn: true,
+          timeout: 3000
+        });
+      })
+      .catch(err => {
+        this.message.show(err.message, {
+          cssClass: 'alert-danger',
+          showCloseBtn: true,
+          closeByBtn: true,
+          timeout: 3000
+        });
+      });
+
   }
 
 }
